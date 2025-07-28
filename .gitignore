@@ -1,3 +1,12 @@
-backend/dist
-node_modules
+# Backend-specific ignores
+backend/dist/
+backend/tsconfig.tsbuildinfo
+node_modules/
+
+# Environment files (security critical!)
 .env
+
+# System/IDE files (optional but recommended)
+.DS_Store
+.idea/
+.vscode/
