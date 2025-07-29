@@ -9,6 +9,7 @@ const envSchema = z.object({
     message: chalk.red.bold("❌ MONG_URI must be a valid url"),
   }),
   PORT: z.string().optional(),
+  JWT_SECRET:z.string()
 });
 
 const result = envSchema.safeParse(process.env);
@@ -20,5 +21,6 @@ if (!result.success) {
 
 export const env = {
   MONGO_URI : result.data.MONGO_URI,
-  PORT: Number(result.data.PORT)|| 5001
+  PORT: Number(result.data.PORT)|| 5001,
+  JWT_SECRET:result.data.JWT_SECRET
 }
