@@ -5,7 +5,6 @@ import { env } from "./env.js";
 
 const connectToDb = async (app: Express): Promise<void> => {
   const mongoDb: string = process.env.MONGO_URI!;
-  console.log(mongoDb)
   if (!mongoDb) {
     console.error(chalk.red("❌ MONGO_URI is not defined in environment variables"));
     process.exit(1);
