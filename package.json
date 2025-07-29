@@ -2,10 +2,12 @@
   "name": "expense-tracker",
   "version": "1.0.0",
   "description": "",
-  "main": "backend/server.ts",
+  "main": "backend/dist/server.js",
   "type": "module",
   "scripts": {
-    "dev": "tsc && nodemon backend/dist/server.js"
+    "build": "tsc",
+    "start": "node backend/dist/server.js",
+    "dev": "concurrently \"tsc --watch\" \"nodemon backend/dist/server.js\""
   },
   "keywords": [],
   "author": "",
@@ -25,7 +27,9 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/mongoose": "^5.11.96",
     "@types/node": "^24.1.0",
+    "concurrently": "^9.2.0",
     "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
 }
