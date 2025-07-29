@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 import { Express } from "express";
 import chalk from "chalk";
-import { env } from "./env";
+import { env } from "./env.js";
 
 const connectToDb = async (app: Express): Promise<void> => {
-  const mongoDb = process.env.MONGO_URI as string;
+  const mongoDb: string = process.env.MONGO_URI!;
+  console.log(mongoDb)
   if (!mongoDb) {
     console.error(chalk.red("❌ MONGO_URI is not defined in environment variables"));
     process.exit(1);
