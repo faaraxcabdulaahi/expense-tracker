@@ -40,7 +40,7 @@
     "allowSyntheticDefaultImports": true
   },
 
-  // ✅ Only compile TypeScript files inside the backend fol,der
+  // ✅ Only compile TypeScript files inside the backend folder
   // Helps avoid accidentally compiling frontend or other folders
-  "include": ["backend/**/*"],
+  "include": ["backend/**/*"]
 }
