@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "backend/server.ts",
+  "type": "module",
   "scripts": {
     "dev": "tsc && nodemon backend/dist/server.js"
   },
