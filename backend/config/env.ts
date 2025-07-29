@@ -11,14 +11,14 @@ const envSchema = z.object({
   PORT: z.string().optional(),
 });
 
-const parsedEnv = envSchema.safeParse(process.env);
+const result = envSchema.safeParse(process.env);
 
-if (!parsedEnv.success) {
-  console.error(chalk.red("❌ Invalid environment variables:\n"), parsedEnv.error.format);
+if (!result.success) {
+  console.error(chalk.red("❌ Invalid environment variables:\n"), result.error.format());
   process.exit(1);
 }
 
 export const env = {
-  MONGO_URI : parsedEnv.data.MONGO_URI,
-  PORT: Number(parsedEnv.data.PORT)|| 5001
+  MONGO_URI : result.data.MONGO_URI,
+  PORT: Number(result.data.PORT)|| 5001
 }
