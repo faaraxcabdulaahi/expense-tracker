@@ -1,46 +1,16 @@
 {
   "compilerOptions": {
-    // ✅ Use modern JavaScript (ES2022 adds features like top-level await, class fields, etc.)
     "target": "ES2022",
-
-    // ✅ Output ES Module format (import/export) instead of CommonJS (require/module.exports)
-    // Needed for modern packages like chalk@5, and works well with `type: "module"`
     "module": "ESNext",
-
-    // ✅ Tells TypeScript to resolve modules like Node.js does
-    // For example: it looks for index.ts or index.js, and follows node_modules rules
     "moduleResolution": "node",
-
-    // ✅ Your original TypeScript source files live inside this folder
-    // Everything inside "./backend" will be compiled
     "rootDir": "./backend",
-
-    // ✅ Compiled JavaScript output goes here
-    // e.g., "backend/controllers/userController.ts" → "backend/dist/controllers/userController.js"
     "outDir": "./backend/dist",
-
-    // ✅ Allows you to import CommonJS packages (like express, mongoose) using `import express from "express"`
     "esModuleInterop": true,
-
-    // ✅ Makes sure all file paths use consistent capitalization (prevents bugs on Linux/Unix)
     "forceConsistentCasingInFileNames": true,
-
-    // ✅ Enables strict type checking: no `any`, no unsafe code, forces better TypeScript discipline
     "strict": true,
-
-    // ✅ Speeds up build time by skipping type checking in node_modules
-    // Makes development faster without sacrificing app correctness
     "skipLibCheck": true,
-
-    // ✅ Lets you import `.json` files as modules (e.g. import config from "./config.json")
     "resolveJsonModule": true,
-
-    // ✅ Allows `import something from 'package'` even if the package doesn’t have a default export
-    // Makes it easier to work with older packages or CommonJS-style modules
     "allowSyntheticDefaultImports": true
   },
-
-  // ✅ Only compile TypeScript files inside the backend fol,der
-  // Helps avoid accidentally compiling frontend or other folders
-  "include": ["backend/**/*"],
+  "include": ["backend/**/*"]
 }
