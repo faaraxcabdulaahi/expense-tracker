@@ -5,10 +5,12 @@
   "main": "backend/dist/server.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "node backend/dist/server.js",
-    "dev": "concurrently \"tsc --watch\" \"nodemon backend/dist/server.js\""
-  },
+  "build": "tsc",
+  "start": "node backend/dist/server.js",
+  "dev": "tsc --watch"
+},
+
+
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -30,6 +32,7 @@
     "concurrently": "^9.2.0",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   }
 }
