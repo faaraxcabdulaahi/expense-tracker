@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Express } from "express";
 import chalk from "chalk";
-import { env } from "./env.js";
+import { env } from "./env";
 
 const connectToDb = async (app: Express): Promise<void> => {
   const mongoDb: string = process.env.MONGO_URI!;
