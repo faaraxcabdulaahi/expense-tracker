@@ -5,12 +5,10 @@
   "main": "backend/dist/server.js",
   "type": "module",
   "scripts": {
-  "build": "tsc",
-  "start": "node backend/dist/server.js",
-  "dev": "tsc --watch"
-},
-
-
+    "build": "tsc",
+    "start": "node backend/dist/server.js",
+    "dev": "tsc --watch"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
