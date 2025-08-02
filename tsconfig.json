@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "rootDir": "./backend",
     "outDir": "./backend/dist",
+    "moduleDetection": "force",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -14,3 +15,4 @@
   },
   "include": ["backend/**/*"]
 }
+
