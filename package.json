@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node backend/dist/server.js",
-    "dev": "concurrently \"tsc --watch\" \"nodemon backend/dist/server.js\""
+    "dev": "node --loader ts-node/esm --experimental-specifier-resolution=node backend/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +30,7 @@
     "concurrently": "^9.2.0",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   }
 }

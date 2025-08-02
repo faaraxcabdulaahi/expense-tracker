@@ -4,12 +4,6 @@ import chalk from "chalk";
 import { env } from "./env";
 
 const connectToDb = async (app: Express): Promise<void> => {
-  const mongoDb: string = process.env.MONGO_URI!;
-  if (!mongoDb) {
-    console.error(chalk.red("❌ MONGO_URI is not defined in environment variables"));
-    process.exit(1);
-  }
-
   try {
     const conn = await mongoose.connect(env.MONGO_URI);
     console.log(`✅ Database is successfully ${chalk.green.bold(conn.connect.name)}`);
