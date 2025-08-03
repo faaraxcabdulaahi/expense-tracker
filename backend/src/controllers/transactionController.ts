@@ -62,3 +62,22 @@ export const getTransactions = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const updateTransaction = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const parsed = updateTransactionSchema.safeParse(req.body);
+    if (!parsed.success) return res.status(400).json({ errors: parsed.error.issues });
+
+    const transaction = await Transaction.findOne({ _id: id, owner: req.user?._id });
+    if (!transaction) return res.status(404).json({ message: "Transaction not found" });
+
+    Object.assign(transaction, parsed.data);
+    if (parsed.data.date) transaction.date = new Date(parsed.data.date);
+
+    await transaction.save();
+    res.status(200).json(transaction);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
