@@ -19,4 +19,8 @@ const transactionSchema = new Schema <ITransaction> ({
     date:{type:Date, required:true},
     owner:{type:Schema.Types.ObjectId, ref:"User", required:true}
 
+},{
+    timestamps:true
 })
+
+export const Transaction =  mongoose.model<ITransaction>("Transaction", transactionSchema)
