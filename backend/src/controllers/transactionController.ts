@@ -81,3 +81,16 @@ export const updateTransaction = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const deleteTransaction = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const transaction = await Transaction.findOneAndDelete({ _id: id, owner: req.user?._id });
+    if (!transaction) return res.status(404).json({ message: "Transaction not found" });
+
+    res.status(200).json({ message: "Transaction deleted" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
