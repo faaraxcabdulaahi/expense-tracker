@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import type { Schema, Document } from "mongoose";
+import { Schema, type Document } from "mongoose";
 
 
 interface ITransaction extends Document {
@@ -10,3 +10,13 @@ interface ITransaction extends Document {
     date:Date,
     owner:mongoose.Types.ObjectId
 }
+
+const transactionSchema = new Schema <ITransaction> ({
+    title:{type:String, required:true},
+    amount:{type:Number, required:true},
+    type:{type:String, enum:["income", "expense"], required:true},
+    category:{type:String, required:true},
+    date:{type:Date, required:true},
+    owner:{type:Schema.Types.ObjectId, ref:"User", required:true}
+
+})
