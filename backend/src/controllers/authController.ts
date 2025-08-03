@@ -1,7 +1,7 @@
-import { Response, Request } from "express";
-import { loginSchema, registerSchema } from "../validations/authValidation";
-import { User } from "../model/userModel";
-import { signJwt } from "../utils/jwtUtil";
+import type { Response, Request } from "express";
+import { loginSchema, registerSchema } from "../validations/authValidation.js";
+import { User } from "../model/userModel.js";
+import { signJwt } from "../utils/jwtUtil.js";
 
 export const register = async (req: Request, res: Response) => {
   try {

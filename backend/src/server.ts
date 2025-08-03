@@ -1,4 +1,5 @@
-import express, {Express} from "express";
+import express from "express";
+import type {Express} from "express";
 import connectToDb from "./config/db.js";
 import authRoutes from "./routes/authRoute.js"
 

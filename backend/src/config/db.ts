@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { Express } from "express";
+import type { Express } from "express";
 import chalk from "chalk";
-import { env } from "./env";
+import { env } from "./env.js";
 
 const connectToDb = async (app: Express): Promise<void> => {
   try {

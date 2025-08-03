@@ -1,9 +1,8 @@
-import { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { env } from "../config/env";
-import { User } from "../model/userModel";
-import { IUSER } from "../model/userModel";
+import { env } from "../config/env.js";
+import { User } from "../model/userModel.js";
 
 dotenv.config();
 
@@ -27,7 +26,7 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
     const user = await User.findById(decoded.id).select("-password");
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    req.user = user; // You’ll define this type next
+    req.user = user; 
     next();
   } catch (error) {
     return res.status(401).json({ message: "Invalid or expired token" });

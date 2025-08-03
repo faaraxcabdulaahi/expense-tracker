@@ -5,9 +5,9 @@
   "main": "backend/dist/server.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "start": "node backend/dist/server.js",
-    "dev": "tsc --watch"
+    "dev": "concurrently \"tsc --watch\" \"nodemon backend/dist/server.js\""
   },
   "keywords": [],
   "author": "",
@@ -31,6 +31,7 @@
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.16",
     "typescript": "^5.8.3"
   }
 }

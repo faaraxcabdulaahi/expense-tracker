@@ -10,7 +10,12 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,               // ✅ This is REQUIRED
+    "baseUrl": "./backend/src",
+    "paths": {
+      "@/*": ["*"]
+    }
   },
-  "include": ["backend/**/*"]
+  "include": ["backend/src/**/*"]
 }
