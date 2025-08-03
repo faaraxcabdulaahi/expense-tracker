@@ -94,3 +94,45 @@ export const deleteTransaction = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const getMonthlySummary = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user?._id;
+
+    const summary = await Transaction.aggregate([
+      { $match: { owner: userId } },
+      {
+        $group: {
+          _id: {
+            year: { $year: "$date" },
+            month: { $month: "$date" },
+            category: "$category",
+            type: "$type",
+          },
+          totalAmount: { $sum: "$amount" },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            year: "$_id.year",
+            month: "$_id.month",
+          },
+          categories: {
+            $push: {
+              category: "$_id.category",
+              type: "$_id.type",
+              totalAmount: "$totalAmount",
+            },
+          },
+        },
+      },
+      { $sort: { "_id.year": -1, "_id.month": -1 } },
+      { $limit: 12 },
+    ]);
+
+    res.status(200).json(summary);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
