@@ -21,6 +21,6 @@ if (!result.success) {
 
 export const env = {
   MONGO_URI : result.data.MONGO_URI,
-  PORT: Number(result.data.PORT)|| 5001,
+  PORT: Number(result.data.PORT)|| 5000,
   JWT_SECRET:result.data.JWT_SECRET
 }
