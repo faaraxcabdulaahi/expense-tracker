@@ -1,4 +1,4 @@
-import { categories } from "@/constants/categories";
+import { categories } from "../constants/categories.js";
 import { z } from "zod";
 
 export const createTransactionSchema = z.object({
