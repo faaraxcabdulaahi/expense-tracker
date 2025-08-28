@@ -5,8 +5,8 @@ import { env } from "./env.js";
 
 const connectToDb = async (app: Express): Promise<void> => {
   try {
-    const conn = await mongoose.connect(env.MONGO_URI);
-    console.log(`✅ Database is successfully ${chalk.green.bold(conn.connect.name)}`);
+    const connDb = await mongoose.connect(env.MONGO_URI);
+    console.log(`✅ Database is successfully ${chalk.green.bold(connDb.connection.name)}`);
 
     app.listen(env.PORT, () => {
       console.log(`${chalk.green.bold("✅ Server")} listening on port ${env.PORT}`);

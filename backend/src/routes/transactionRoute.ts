@@ -1,5 +1,5 @@
-import { createTransaction, deleteTransaction, getMonthlySummary, getTransactions, updateTransaction } from "@/controllers/transactionController";
-import { protect } from "@/middleware/authMiddlware";
+import { createTransaction, deleteTransaction, getMonthlySummary, getTransactions, updateTransaction } from "@/controllers/transactionController.js";
+import { protect } from "@/middleware/authMiddlware.js";
 import express from "express";
 
 const router = express.Router();

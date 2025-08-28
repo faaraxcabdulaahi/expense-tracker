@@ -1,13 +1,17 @@
-import type {Request, Response} from "express";
-import { Transaction } from "@/model/transactionModel";
-import { createTransactionSchema, updateTransactionSchema } from "@/validations/transactionValidation";
+import type { Request, Response } from "express";
+import { Transaction } from "@/model/transactionModel.js";
+import {
+  createTransactionSchema,
+  updateTransactionSchema,
+} from "@/validations/transactionValidation.js";
 
-const parseDate = (dateStr:string): Date => new Date(dateStr);
+const parseDate = (dateStr: string): Date => new Date(dateStr);
 
 export const createTransaction = async (req: Request, res: Response) => {
   try {
     const parsed = createTransactionSchema.safeParse(req.body);
-    if (!parsed.success) return res.status(400).json({ errors: parsed.error.issues });
+    if (!parsed.success)
+      return res.status(400).json({ errors: parsed.error.issues });
 
     const { title, amount, type, category, date } = parsed.data;
 
@@ -30,7 +34,13 @@ export const getTransactions = async (req: Request, res: Response) => {
   try {
     const userId = req.user?._id;
 
-    const { category, startDate, endDate, page = "1", limit = "10" } = req.query;
+    const {
+      category,
+      startDate,
+      endDate,
+      page = "1",
+      limit = "10",
+    } = req.query;
 
     const filters: any = { owner: userId };
 
@@ -67,10 +77,15 @@ export const updateTransaction = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const parsed = updateTransactionSchema.safeParse(req.body);
-    if (!parsed.success) return res.status(400).json({ errors: parsed.error.issues });
+    if (!parsed.success)
+      return res.status(400).json({ errors: parsed.error.issues });
 
-    const transaction = await Transaction.findOne({ _id: id, owner: req.user?._id });
-    if (!transaction) return res.status(404).json({ message: "Transaction not found" });
+    const transaction = await Transaction.findOne({
+      _id: id,
+      owner: req.user?._id,
+    });
+    if (!transaction)
+      return res.status(404).json({ message: "Transaction not found" });
 
     Object.assign(transaction, parsed.data);
     if (parsed.data.date) transaction.date = new Date(parsed.data.date);
@@ -86,12 +101,17 @@ export const deleteTransaction = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    const transaction = await Transaction.findOneAndDelete({ _id: id, owner: req.user?._id });
-    if (!transaction) return res.status(404).json({ message: "Transaction not found" });
+    const transaction = await Transaction.findOneAndDelete({
+      _id: id,
+      owner: req.user?._id,
+    });
+    if (!transaction)
+      return res.status(404).json({ message: "Transaction not found" });
 
     res.status(200).json({ message: "Transaction deleted" });
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    console.error("Delete transaction error:", error);
+    res.status(500).json({ message: "Server error", error });
   }
 };
 
