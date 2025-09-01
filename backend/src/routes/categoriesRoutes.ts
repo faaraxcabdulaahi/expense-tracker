@@ -1,4 +1,3 @@
-// src/routes/categoriesRoutes.ts
 import { Router } from "express";
 import { categories } from "../constants/categories.js";
 

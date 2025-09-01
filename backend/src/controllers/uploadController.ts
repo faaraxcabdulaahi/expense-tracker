@@ -1,6 +1,6 @@
 import type{ Request, Response } from "express";
-import cloudinary from "../config/cloudinary";
-import { User } from "@/model/userModel.js";
+import cloudinary from "../config/cloudinary.js";
+// import { User } from "../model/userModel.js";
 
 export const uploadProfilePicture = async (req: Request, res: Response) => {
   if (!req.file) return res.status(400).json({ message: "No file provided" });
