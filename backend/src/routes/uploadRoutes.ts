@@ -1,7 +1,7 @@
-import { protect } from "@/middleware/authMiddlware";
+import { protect } from "@/middleware/authMiddlware.js";
 import { Router } from "express";
 import {upLoad} from "../middleware/uploadMiddleware.js";
-import { uploadProfilePicture } from "@/controllers/uploadController.js";
+import { uploadProfilePicture } from "../controllers/uploadController.js";
 
 
 const router = Router();
