@@ -1,4 +1,4 @@
-import { getAdminOverview } from "@/middleware/adminController.js";
+import { getAdminOverview } from "@/middleware/adminMiddleware.js";
 import { protect } from "@/middleware/authMiddlware.js";
 import { isAdmin } from "@/middleware/roleMiddleware.js";
 import  { Router } from "express";
