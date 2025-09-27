@@ -22,9 +22,9 @@ const options = {
         },
       },
     },
-    security: [{ bearerAuth: [] }], // This applies globally
+    security: [{ bearerAuth: [] }], 
   },
-  apis: ["./src/routes/*.ts"], // This is the path to my route files
+  apis: ["./src/routes/*.ts"], 
 };
 
 export const swaggerSpec = swaggerJSDoc(options);
