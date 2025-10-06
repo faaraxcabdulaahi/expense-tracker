@@ -10,10 +10,10 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { cn } from '../lib/utils';
 
-
+// Add this to the navigation array:
 const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-  { name: 'Transactions', href: '/transactions', icon: CreditCard },
+  { name: 'Transactions', href: '/transactions', icon: CreditCard }, // Add this line
   { name: 'Analytics', href: '/analytics', icon: BarChart3 },
   { name: 'Admin', href: '/admin', icon: Users, adminOnly: true },
   { name: 'Settings', href: '/settings', icon: Settings },
