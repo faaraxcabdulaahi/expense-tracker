@@ -1,42 +1,217 @@
-// src/context/AuthContext.tsx
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  type ReactNode,
+} from "react";
+import type {
+  AuthState,
+  AuthAction,
+  User,
+  LoginCredentials,
+  RegisterCredentials,
+} from "../types/types";
+import { authService, tokenService } from "../services/auth";
 
-type AuthContextType = {
-  user: any;
-  token: string | null;
-  login: (token: string, user: any) => void;
-  logout: () => void;
+// Initial state
+const initialState: AuthState = {
+  user: null,
+  token: null,
+  isLoading: true,
+  isAuthenticated: false,
 };
 
-const AuthContext = createContext<AuthContextType | null>(null);
+// Auth context type
+interface AuthContextType extends AuthState {
+  login: (credentials: LoginCredentials) => Promise<void>;
+  register: (credentials: RegisterCredentials) => Promise<void>;
+  logout: () => void;
+  updateUser: (user: User) => void;
+}
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<any>(null);
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token")
-  );
+// Create context
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-  const login = (jwt: string, userData: any) => {
-    localStorage.setItem("token", jwt);
-    setToken(jwt);
-    setUser(userData);
+// Reducer function for state management
+function authReducer(state: AuthState, action: AuthAction): AuthState {
+  switch (action.type) {
+    case 'LOGIN_START':
+      return {
+        ...state,
+        isLoading: true,
+      };
+
+    case 'LOGIN_SUCCESS':
+      return {
+        ...state,
+        user: action.payload.user,
+        token: action.payload.token,
+        isAuthenticated: true,
+        isLoading: false,
+      };
+
+    case 'LOGIN_FAILURE':
+      return {
+        ...state,
+        user: null,
+        token: null,
+        isAuthenticated: false,
+        isLoading: false,
+      };
+
+    case 'LOGOUT':
+      return {
+        ...state,
+        user: null,
+        token: null,
+        isAuthenticated: false,
+        isLoading: false,
+      };
+
+    case 'UPDATE_USER':
+      return {
+        ...state,
+        user: action.payload,
+      };
+
+    default:
+      return state;
+  }
+}
+
+// Auth Provider component
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export function AuthProvider({ children }: AuthProviderProps) {
+  const [state, dispatch] = useReducer(authReducer, initialState);
+
+  // Check for existing token on app start
+  useEffect(() => {
+    const initializeAuth = async () => {
+      const token = tokenService.getToken();
+      
+      if (token && tokenService.hasValidToken()) {
+        try {
+          // Verify token is still valid by fetching user profile
+          const response = await authService.getProfile();
+          
+          if (response.success && response.data) {
+            dispatch({
+              type: 'LOGIN_SUCCESS',
+              payload: {
+                user: response.data,
+                token: token,
+              },
+            });
+          } else {
+            // Token is invalid
+            tokenService.removeToken();
+            dispatch({ type: 'LOGIN_FAILURE' });
+          }
+        } catch (error) {
+          console.error('❌ Token validation failed:', error);
+          tokenService.removeToken();
+          dispatch({ type: 'LOGIN_FAILURE' });
+        }
+      } else {
+        dispatch({ type: 'LOGIN_FAILURE' });
+      }
+    };
+
+    initializeAuth();
+  }, []);
+
+  // Login function
+  const login = async (credentials: LoginCredentials): Promise<void> => {
+    dispatch({ type: 'LOGIN_START' });
+
+    try {
+      const response = await authService.login(credentials);
+
+      if (response.success && response.data) {
+        const { user, token } = response.data;
+        
+        // Store token and user data
+        tokenService.setToken(token);
+        localStorage.setItem('user', JSON.stringify(user));
+        
+        dispatch({
+          type: 'LOGIN_SUCCESS',
+          payload: { user, token },
+        });
+      } else {
+        throw new Error(response.error || 'Login failed');
+      }
+    } catch (error: any) {
+      dispatch({ type: 'LOGIN_FAILURE' });
+      throw error;
+    }
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    setToken(null);
-    setUser(null);
+  // Register function
+  const register = async (credentials: RegisterCredentials): Promise<void> => {
+    dispatch({ type: 'LOGIN_START' });
+
+    try {
+      const response = await authService.register(credentials);
+
+      if (response.success && response.data) {
+        const { user, token } = response.data;
+        
+        // Store token and user data
+        tokenService.setToken(token);
+        localStorage.setItem('user', JSON.stringify(user));
+        
+        dispatch({
+          type: 'LOGIN_SUCCESS',
+          payload: { user, token },
+        });
+      } else {
+        throw new Error(response.error || 'Registration failed');
+      }
+    } catch (error: any) {
+      dispatch({ type: 'LOGIN_FAILURE' });
+      throw error;
+    }
+  };
+
+  // Logout function
+  const logout = (): void => {
+    tokenService.removeToken();
+    dispatch({ type: 'LOGOUT' });
+  };
+
+  // Update user function
+  const updateUser = (user: User): void => {
+    localStorage.setItem('user', JSON.stringify(user));
+    dispatch({ type: 'UPDATE_USER', payload: user });
+  };
+
+  const value: AuthContextType = {
+    ...state,
+    login,
+    register,
+    logout,
+    updateUser,
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used inside AuthProvider");
-  return ctx;
-};
+// Custom hook to use auth context
+export function useAuth(): AuthContextType {
+  const context = useContext(AuthContext);
+  
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  
+  return context;
+}
