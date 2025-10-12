@@ -7,8 +7,7 @@ export interface IUSER extends Document {
   email: string;
   password: string;
   role: "user" | "admin";
-  profilePicture?: string; 
-
+  profilePicture?: string;
   comparePassword(enteredPassword: string): Promise<boolean>;
 }
 
@@ -17,7 +16,7 @@ const userSchema = new Schema<IUSER>(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
-    profilePicture: { type: String, default: "" }, 
+    profilePicture: { type: String, default: "" },
     role: { type: String, enum: ["user", "admin"], default: "user" },
   },
   {
@@ -36,4 +35,5 @@ userSchema.methods.comparePassword = async function (enteredPassword: string) {
   return bcrypt.compare(enteredPassword, this.password);
 };
 
-export const User = mongoose.model<IUSER>("user", userSchema);
+// Make sure this export is correct
+export const User = mongoose.model<IUSER>("User", userSchema);

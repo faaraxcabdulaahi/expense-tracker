@@ -27,7 +27,7 @@ interface AuthContextType extends AuthState {
   login: (credentials: LoginCredentials) => Promise<void>;
   register: (credentials: RegisterCredentials) => Promise<void>;
   logout: () => void;
-  updateUser: (user: User) => void;
+  updateUser: (userData: Partial<User>) => Promise<void>; // Fixed this line
 }
 
 // Create context
@@ -184,10 +184,35 @@ export function AuthProvider({ children }: AuthProviderProps) {
     dispatch({ type: 'LOGOUT' });
   };
 
-  // Update user function
-  const updateUser = (user: User): void => {
-    localStorage.setItem('user', JSON.stringify(user));
-    dispatch({ type: 'UPDATE_USER', payload: user });
+  // Update user function - FIXED VERSION
+  const updateUser = async (userData: Partial<User>): Promise<void> => {
+    try {
+      // Get current user from state
+      const currentUser = state.user;
+      if (!currentUser) {
+        throw new Error('No user is currently authenticated');
+      }
+
+      // Merge current user data with new data
+      const updatedUser: User = {
+        ...currentUser,
+        ...userData,
+      };
+
+      // Update localStorage
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      
+      // Update state
+      dispatch({ type: 'UPDATE_USER', payload: updatedUser });
+
+      // Optional: If you want to persist to backend, uncomment this:
+      // const response = await authService.updateProfile(userData);
+      // if (!response.success) throw new Error(response.error);
+
+    } catch (error: any) {
+      console.error('Failed to update user:', error);
+      throw new Error(error.message || 'Failed to update user profile');
+    }
   };
 
   const value: AuthContextType = {

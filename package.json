@@ -4,11 +4,13 @@
   "description": "",
   "main": "backend/dist/server.js",
   "type": "module",
+
   "scripts": {
-    "build": "tsc && tsc-alias",
-    "start": "node backend/dist/server.js",
-    "dev": "concurrently \"tsc --watch\" \"nodemon backend/dist/server.js\""
-  },
+  "build": "tsc && tsc-alias",
+  "dev": "concurrently \"tsc --watch\" \"tsc-alias --watch\" \"nodemon backend/dist/server.js\"",
+  "start": "node backend/dist/server.js"
+}
+,
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,6 +22,7 @@
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
     "mongoose": "^8.16.5",
     "multer": "^2.0.2",
     "swagger-jsdoc": "^6.2.8",
@@ -41,6 +44,7 @@
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3"
   }
 }
