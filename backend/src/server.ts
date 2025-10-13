@@ -18,11 +18,37 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173", 
-      "https://expense-tracker-1-3oyx.onrender.com" // Your frontend URL
+      "https://expense-tracker-1-3oyx.onrender.com" 
     ],
     credentials: true,
   })
 );
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Expense Tracker API is running!',
+    version: '1.0.0',
+    endpoints: {
+      auth: '/api/v1/auth',
+      transactions: '/api/v1/transaction',
+      categories: '/api/v1/categories',
+      upload: '/api/v1/upload',
+      admin: '/api/v1/admin',
+      documentation: '/docs'
+    },
+    timestamp: new Date().toISOString()
+  });
+});
+
+app.get('/api', (req, res) => {
+  res.json({ 
+    message: 'Expense Tracker API',
+    version: '1.0.0'
+  });
+});
+
+
 app.use(express.json());
 
 app.use("/api/v1/auth", authRoutes);
