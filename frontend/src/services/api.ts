@@ -3,8 +3,13 @@ import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse, AxiosErr
 import type { ApiResponse } from "../types/types";
 
 // Create axios instance with base configuration
+// const api: AxiosInstance = axios.create({
+//   baseURL: '/api/v1',
+//   timeout: 10000,
+// });
+
 const api: AxiosInstance = axios.create({
-  baseURL: '/api/v1',
+  baseURL: 'https://your-backend-url.onrender.com/api/v1',
   timeout: 10000,
 });
 

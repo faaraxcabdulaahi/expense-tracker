@@ -10,15 +10,19 @@ import { swaggerSpec } from "./config/swagger.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 
+
 const app: Express = express();
+
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // your Vite frontend
-    credentials: true, // allow cookies/auth headers
+    origin: [
+      "http://localhost:5173", 
+      "https://expense-tracker-1-3oyx.onrender.com" // Your frontend URL
+    ],
+    credentials: true,
   })
 );
-
 app.use(express.json());
 
 app.use("/api/v1/auth", authRoutes);
@@ -26,7 +30,6 @@ app.use("/api/v1/transaction", transactionRoutes);
 app.use("/api/v1/categories", categoriesRoutes);
 app.use("/api/v1/upload", uploadRoutes);
 app.use("/api/v1/admin", adminRoutes);
-
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 connectToDb(app);
