@@ -2,6 +2,8 @@ import React from 'react';
 import { Shield, Users, BarChart3 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { AdminOverview } from '../../components/admin/AdminOverview';
+import { UserManagement } from '../../components/admin/UserManagement';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 
 export function AdminDashboard() {
   return (

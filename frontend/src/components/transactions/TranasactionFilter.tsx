@@ -1,10 +1,16 @@
-import React from 'react';
-import { Filter, X } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { Select } from '@radix-ui/react-select';
-import { categories, transactionTypes } from '../../utils/constants';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
+import React from "react";
+import { Filter, X } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { Select } from "@radix-ui/react-select";
+import { categories, transactionTypes } from "../../utils/constants";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 interface TransactionFiltersProps {
   filters: {
@@ -17,16 +23,18 @@ interface TransactionFiltersProps {
   onClearFilters: () => void;
 }
 
-export function TransactionFilters({ 
-  filters, 
-  onFilterChange, 
-  onClearFilters 
+export function TransactionFilters({
+  filters,
+  onFilterChange,
+  onClearFilters,
 }: TransactionFiltersProps) {
   const handleFilterChange = (key: string, value: string) => {
     onFilterChange({ ...filters, [key]: value || undefined });
   };
 
-  const hasActiveFilters = Object.values(filters).some(value => value !== undefined && value !== '');
+  const hasActiveFilters = Object.values(filters).some(
+    (value) => value !== undefined && value !== ""
+  );
 
   return (
     <Card>
@@ -45,11 +53,11 @@ export function TransactionFilters({
           <div>
             <label className="text-sm font-medium mb-2 block">Type</label>
             <Select
-              value={filters.type || ''}
-              onChange={(e) => handleFilterChange('type', e.target.value)}
+              value={filters.type || ""}
+              onChange={(e) => handleFilterChange("type", e.target.value)}
             >
               <option value="">All Types</option>
-              {transactionTypes.map(type => (
+              {transactionTypes.map((type) => (
                 <option key={type.value} value={type.value}>
                   {type.label}
                 </option>
@@ -61,11 +69,11 @@ export function TransactionFilters({
           <div>
             <label className="text-sm font-medium mb-2 block">Category</label>
             <Select
-              value={filters.category || ''}
-              onChange={(e) => handleFilterChange('category', e.target.value)}
+              value={filters.category || ""}
+              onChange={(e) => handleFilterChange("category", e.target.value)}
             >
               <option value="">All Categories</option>
-              {categories.map(category => (
+              {categories.map((category) => (
                 <option key={category} value={category}>
                   {category}
                 </option>
@@ -78,8 +86,8 @@ export function TransactionFilters({
             <label className="text-sm font-medium mb-2 block">From Date</label>
             <Input
               type="date"
-              value={filters.startDate || ''}
-              onChange={(e) => handleFilterChange('startDate', e.target.value)}
+              value={filters.startDate || ""}
+              onChange={(e) => handleFilterChange("startDate", e.target.value)}
             />
           </div>
 
@@ -88,8 +96,8 @@ export function TransactionFilters({
             <label className="text-sm font-medium mb-2 block">To Date</label>
             <Input
               type="date"
-              value={filters.endDate || ''}
-              onChange={(e) => handleFilterChange('endDate', e.target.value)}
+              value={filters.endDate || ""}
+              onChange={(e) => handleFilterChange("endDate", e.target.value)}
             />
           </div>
         </div>
