@@ -1,8 +1,9 @@
 import React from 'react';
 import { Sidebar } from './SideBar';
+import { Outlet } from 'react-router-dom';
 
 interface MainLayoutProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export function MainLayout({ children }: MainLayoutProps) {
@@ -15,6 +16,9 @@ export function MainLayout({ children }: MainLayoutProps) {
       <main className="flex-1 w-full max-w-full md:ml-64">
         <div className="p-4 md:p-6 lg:p-8 w-full max-w-full">
           <div className="w-full max-w-full">
+            {/* Use Outlet for nested routes */}
+            <Outlet />
+            {/* Optional: still support children prop for backward compatibility */}
             {children}
           </div>
         </div>
