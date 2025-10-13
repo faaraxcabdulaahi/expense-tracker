@@ -13,7 +13,6 @@ import { Profile } from './pages/profile/Profile';
 import { Login } from './pages/auth/Login';
 import { Register } from './pages/auth/Register';
 
-
 function App() {
   return (
     <ErrorBoundary>
@@ -23,11 +22,12 @@ function App() {
             <div className="App">
               <Routes>
                 {/* Public routes */}
+                <Route path="/" element={<Login />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 
                 {/* Protected routes */}
-                <Route path="/" element={
+                <Route path="/dashboard" element={
                   <ProtectedRoute>
                     <MainLayout>
                       <Dashboard />
