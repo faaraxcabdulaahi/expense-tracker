@@ -75,18 +75,18 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile header with compact hamburger */}
-      <div className="md:hidden flex items-center justify-between py-3 px-4 border-b bg-background sticky top-0 z-40 h-14">
-        <Link to="/" className="font-semibold text-lg">Expense Tracker</Link>
+      {/* Mobile header - Ultra compact */}
+      <div className="md:hidden flex items-center justify-between py-2 px-3 border-b bg-background sticky top-0 z-40 h-12">
+        <Link to="/" className="font-semibold text-base">Expense Tracker</Link>
         <button 
           onClick={() => setIsOpen(!isOpen)}
-          className="mobile-hamburger p-1.5 rounded-md hover:bg-muted/80 transition-colors"
+          className="mobile-hamburger p-1 rounded-md hover:bg-muted/80 transition-colors"
           aria-label="Toggle menu"
         >
           {isOpen ? (
-            <X className="w-5 h-5 text-muted-foreground" />
+            <X className="w-4 h-4 text-muted-foreground" />
           ) : (
-            <Menu className="w-5 h-5 text-muted-foreground" />
+            <Menu className="w-4 h-4 text-muted-foreground" />
           )}
         </button>
       </div>
@@ -101,21 +101,21 @@ export function Sidebar() {
 
       {/* Mobile sidebar */}
       <div className={cn(
-        "mobile-sidebar fixed inset-y-0 left-0 z-50 w-64 transform bg-background border-r p-4 transition-transform duration-300 ease-in-out md:hidden",
+        "mobile-sidebar fixed inset-y-0 left-0 z-50 w-64 transform bg-background border-r p-3 transition-transform duration-300 ease-in-out md:hidden",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
-        <div className="flex items-center justify-between mb-6 py-2">
-          <Link to="/" className="font-semibold text-lg">Expense Tracker</Link>
+        <div className="flex items-center justify-between mb-4 py-1">
+          <Link to="/" className="font-semibold text-base">Expense Tracker</Link>
           <button 
             onClick={() => setIsOpen(false)}
-            className="p-1.5 rounded-md hover:bg-muted/80 transition-colors"
+            className="p-1 rounded-md hover:bg-muted/80 transition-colors"
             aria-label="Close menu"
           >
             <X className="w-4 h-4 text-muted-foreground" />
           </button>
         </div>
         
-        <nav className="flex flex-col gap-1">
+        <nav className="flex flex-col gap-0.5">
           {filteredNavigation.map(item => {
             const Icon = item.icon;
             const isActive = location.pathname === item.href;
@@ -126,7 +126,7 @@ export function Sidebar() {
                 to={item.href}
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2.5 text-muted-foreground transition-all hover:text-primary hover:bg-muted/50",
+                  "flex items-center gap-2 rounded-lg px-2 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-muted/50 text-sm",
                   isActive && "bg-primary/10 text-primary font-medium"
                 )}
               >
